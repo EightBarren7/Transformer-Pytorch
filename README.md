@@ -32,4 +32,4 @@ Using ```python train.py``` to start training.
 ## 2.3 Testing
 Edit the **checkpoint_path** to your model path and then using ```python translation``` to test your model.
 
-A model trained after 100 epochs is provided to _result_ directory.
+A model trained after 100 epochs is provided in [link](https://pan.baidu.com/s/1VFquAi1RhRag1puyuFGawA) with password **k1nv**
