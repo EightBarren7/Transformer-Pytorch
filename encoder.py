@@ -22,8 +22,12 @@ class Encoder(nn.Module):
         self.layers = nn.ModuleList([EncoderLayer() for _ in range(n_layers)])
 
     def forward(self, inputs):
+        """
+        inputs: [batch_size, en_maxlen]
+        return: [batch_size, en_maxlen, d_model]
+        """
         weights = []
-        outputs = self.word_emb(inputs)
+        outputs = self.word_emb(inputs) # [batch_size, en_maxlen, d_model]
         outputs = self.pos_emb(outputs.transpose(0, 1)).transpose(0, 1)
         pad_masks = pad_mask(inputs, inputs)
         for layer in self.layers:

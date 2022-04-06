@@ -24,6 +24,12 @@ class Decoder(nn.Module):
         self.layers = nn.ModuleList([DecoderLayer() for _ in range(n_layers)])
 
     def forward(self, dec_inputs, enc_inputs, enc_outputs):
+        """
+        dec_inputs: [batch_size, cn_maxlen-1]
+        enc_inputs: [batch_size, en_maxlen]
+        enc_outputs: [batch_size, en_maxlen]
+        return : outputs: [batch_size, cn_maxlen-1, d_model]
+        """
         outputs = self.word_emb(dec_inputs)
         outputs = self.pos_emb(outputs.transpose(0, 1)).transpose(0, 1).cuda()
         pad_masks = pad_mask(dec_inputs, dec_inputs).cuda()
