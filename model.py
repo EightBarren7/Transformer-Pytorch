@@ -13,9 +13,17 @@ class Transformer(nn.Module):
         self.fc = nn.Linear(d_model, dec_vocab_size, bias=False).to(device)
 
     def forward(self, enc_inputs, dec_inputs):
+        """
+        enc_inputs: [batch_size, en_maxlen]
+        dec_inputs: [batch_size, cn_maxlen-1]
+        return: [batch_size * (cn_maxlen-1), cn_vocab_size]
+        """
         enc_outputs, enc_attention = self.encoder(enc_inputs)
+        # enc_outputs: [batch_size, en_maxnlen, d_model]
         dec_outputs, dec_attention1, dec_attention2 = self.decoder(dec_inputs, enc_inputs, enc_outputs)
+        # dec_outputs: [batch_size, cn_maxlen-1, d_model]
         outputs = self.fc(dec_outputs)
+        # outputs: [batch_size, cn_maxlen-1, cn_vocab_size]
         return outputs.view(-1, outputs.size(-1)), enc_attention, dec_attention1, dec_attention2
 
     def encode(self, enc_inputs):
